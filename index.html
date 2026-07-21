@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Surprise ✨</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Poppins, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #ffe9ef, #ffd8e5, #ffc8da);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding: 20px 0;
+}
+
+/* card */
+.card {
+    width: 92%;
+    max-width: 360px;
+    background: #fff;
+    padding: 28px;
+    border-radius: 35px;
+    border: 4px solid #ff5f92;
+    box-shadow: 0 0 35px rgba(255, 105, 150, .25);
+    text-align: center;
+    animation: fade .8s;
+    position: relative;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.avatar {
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px dashed #ff5f92;
+    font-size: 42px;
+    background: #fff4f7;
+    margin-bottom: 18px;
+}
+
+.title {
+    font-family: "Dancing Script", cursive;
+    font-size: 35px;
+    color: #cc2b5e;
+    margin-bottom: 25px;
+}
+
+.pinArea {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.pin {
+    width: 42px;
+    height: 50px;
+    border: 3px solid #ffc0d3;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #ff4d85;
+    background: white;
+}
+
+.keypad {
+    width: 220px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.key {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    border: 3px solid #ffc0d3;
+    background: white;
+    font-size: 24px;
+    color: #ff4d85;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.key:active {
+    transform: scale(.92);
+}
+
+.unlock {
+    margin-top: 25px;
+    padding: 14px 38px;
+    border: none;
+    border-radius: 50px;
+    background: #ff4d85;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 0, 98, .25);
+    transition: 0.2s;
+}
+
+.hidden {
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+STAGE 1 (PIN 1: 140426)
+========================= -->
+<div class="card" id="stage1">
+    <div class="avatar">✨</div>
+    <div class="title">A Little Surprise For You ✨</div>
+    <div class="pinArea">
+        <div class="pin"></div>
+        <div class="pin"></div>
+        <div class="pin"></div>
+        <div class="pin"></div>
+        <div class="pin"></div>
+        <div class="pin"></div>
+    </div>
+    <div class="keypad">
+        <button class="key" onclick="press(1,6)">1</button>
+        <button class="key" onclick="press(2,6)">2</button>
+        <button class="key" onclick="press(3,6)">3</button>
+        <button class="key" onclick="press(4,6)">4</button>
+        <button class="key" onclick="press(5,6)">5</button>
+        <button class="key" onclick="press(6,6)">6</button>
+        <button class="key" onclick="press(7,6)">7</button>
+        <button class="key" onclick="press(8,6)">8</button>
+        <button class="key" onclick="press(9,6)">9</button>
+        <button class="key" onclick="clearPin()">*</button>
+        <button class="key" onclick="press(0,6)">0</button>
+        <button class="key" onclick="clearPin()">#</button>
+    </div>
+    <button class="unlock" onclick="checkFirst()">UNLOCK 🤍</button>
+</div>
+
+<!-- =========================
+STAGE 2 (Friendship Date)
+========================= -->
+<div class="card hidden" id="stage2">
+    <div class="avatar">🌸</div>
+    <div class="title">14 • 04 • 2026</div>
+    <p style="font-size:18px;color:#b03060;line-height:1.8;margin-top:15px;">
+        That wasn't just a date...<br><br>
+        It quietly became<br>
+        one of my favourite memories. 🤍
+    </p>
+    <button class="unlock" onclick="nextStage()">Continue ✨</button>
+</div>
+
+<!-- =========================
+STAGE 3 (PIN 2: 143)
+========================= -->
+<div class="card hidden" id="stage3">
+    <div class="avatar">🔐</div>
+    <div class="title">One More Lock ❤️</div>
+    <div class="pinArea">
+        <div class="pin pin2"></div>
+        <div class="pin pin2"></div>
+        <div class="pin pin2"></div>
+    </div>
+    <div class="keypad">
+        <button class="key" onclick="pressSecond(1)">1</button>
+        <button class="key" onclick="pressSecond(2)">2</button>
+        <button class="key" onclick="pressSecond(3)">3</button>
+        <button class="key" onclick="pressSecond(4)">4</button>
+        <button class="key" onclick="pressSecond(5)">5</button>
+        <button class="key" onclick="pressSecond(6)">6</button>
+        <button class="key" onclick="pressSecond(7)">7</button>
+        <button class="key" onclick="pressSecond(8)">8</button>
+        <button class="key" onclick="pressSecond(9)">9</button>
+        <button class="key" onclick="clearSecond()">*</button>
+        <button class="key" onclick="pressSecond(0)">0</button>
+        <button class="key" onclick="clearSecond()">#</button>
+    </div>
+    <button class="unlock" onclick="checkSecond()">Unlock ❤️</button>
+</div>
+
+<!-- =========================
+STAGE 4 (QUESTION)
+========================= -->
+<div class="card hidden" id="stage4">
+    <div class="avatar">🧸</div>
+    <div class="title">Just One Question...</div>
+    <p style="font-size:18px;color:#b03060;line-height:1.8;margin-bottom:25px;">
+        Can I show you<br>
+        a little message<br>
+        made only for you? 🤍
+    </p>
+    <div style="display:flex; justify-content:center; align-items:center; gap:20px; min-height:80px; position:relative;">
+        <button class="unlock" style="margin:0; background:#ff4d85;" onclick="openLetter()">YES ❤️</button>
+        <button id="noBtn" class="unlock" style="margin:0; background:#8b8b8b; position:relative;" onmouseover="runAway(event)" onclick="runAway(event)">NO 🥺</button>
+    </div>
+    <p id="funText" style="margin-top:25px;display:none;font-size:14px;color:#cc2b5e;">
+        Hehe...<br>I don't think "NO"<br>is the correct answer today. 🌸
+    </p>
+</div>
+
+<!-- =========================
+STAGE 5 (LETTER)
+========================= -->
+<div class="card hidden" id="stage5">
+    <div class="avatar">💌</div>
+    <div class="title">A Little Letter</div>
+    <div style="text-align:left;background:#fff4f8;padding:18px;border-radius:20px;line-height:1.9;font-size:15px;color:#8b2c55;">
+        Dear Rahia,<br><br>
+        Thank you for becoming one of the most beautiful parts of my days.<br><br>
+        You don't have to promise me forever.<br>
+        I simply hope life always gives you reasons to smile.<br><br>
+        No matter where life takes us,<br>
+        I'll always be grateful that our paths crossed. 🤍🌸
+    </div>
+    <button class="unlock" onclick="finishMagic()">Keep Smiling ✨</button>
+</div>
+
+<!-- =========================
+FINAL STAGE
+========================= -->
+<div class="card hidden" id="stage6">
+    <div class="avatar">🌸</div>
+    
+    <img id="photo" src="https://i.ibb.co.com/N29cc9GX/1784659303978.jpg" alt="Photo" style="width:160px;height:160px;object-fit:cover;border-radius:50%;border:5px solid #ff6fa2;box-shadow:0 0 30px rgba(255,105,150,.45);margin-bottom:20px;">
+    
+    <div class="title">One Last Thing... 🤍</div>
+    <p style="color:#b03060;line-height:1.9;font-size:16px;margin-bottom:20px;">
+        Thank you for opening this little surprise.<br><br>
+        Whether life keeps us together or takes us on different paths,<br><br>
+        I hope you always smile... because your smile deserves every happiness in the world. 🌸🤍
+    </p>
+    
+    <button class="unlock" onclick="celebrate()">Finish ✨</button>
+    
+    <p id="endText" style="display:none;margin-top:25px;color:#cc2b5e;font-size:18px;font-weight:600;line-height:1.8;">
+        Thank you for reading this little piece of my heart.<br><br>
+        Stay Happy Always. 🤍🌸
+    </p>
+</div>
+
+<script>
+// ---------- STAGE 1 LOGIC ----------
+let pin = "";
+
+function press(n, max) {
+    if (pin.length < max) {
+        pin += n;
+        update(max);
+    }
+}
+
+function update(max) {
+    let box = document.querySelectorAll("#stage1 .pin");
+    for (let i = 0; i < max; i++) {
+        box[i].innerHTML = pin[i] ? "🤍" : "";
+    }
+}
+
+function clearPin() {
+    pin = "";
+    update(6);
+}
+
+function checkFirst() {
+    if (pin == "140426") {
+        document.getElementById("stage1").classList.add("hidden");
+        document.getElementById("stage2").classList.remove("hidden");
+    } else {
+        alert("Wrong Passcode 🥺");
+    }
+    clearPin();
+}
+
+// ---------- STAGE 2 & 3 LOGIC ----------
+let secondPin = "";
+
+function nextStage() {
+    document.getElementById("stage2").classList.add("hidden");
+    document.getElementById("stage3").classList.remove("hidden");
+}
+
+function pressSecond(n) {
+    if (secondPin.length < 3) {
+        secondPin += n;
+        updateSecond();
+    }
+}
+
+function updateSecond() {
+    let b = document.querySelectorAll(".pin2");
+    for (let i = 0; i < 3; i++) {
+        b[i].innerHTML = secondPin[i] ? "❤️" : "";
+    }
+}
+
+function clearSecond() {
+    secondPin = "";
+    updateSecond();
+}
+
+function checkSecond() {
+    if (secondPin == "143") {
+        document.getElementById("stage3").classList.add("hidden");
+        document.getElementById("stage4").classList.remove("hidden");
+    } else {
+        alert("Wrong PIN 🥺");
+        clearSecond();
+    }
+}
+
+// ---------- STAGE 4 LOGIC (PREVENT CLICK & RUN AWAY) ----------
+let move = 0;
+
+function runAway(e) {
+    if (e) e.preventDefault(); // ক্লিক হওয়া বা চিঠি ওপেন হওয়া পুরোপুরি ব্লক করবে
+    move++;
+    const btn = document.getElementById("noBtn");
+    btn.style.position = "absolute";
+    
+    // YES বাটন থেকে বেশ খানিকটা দূরে সরিয়ে দেবে
+    let randomX = Math.random() > 0.5 ? (Math.random() * 100 + 70) : -(Math.random() * 100 + 70);
+    let randomY = (Math.random() * 100 - 50);
+    
+    btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+    
+    if (move >= 3) {
+        document.getElementById("funText").style.display = "block";
+    }
+}
+
+function openLetter() {
+    document.getElementById("stage4").classList.add("hidden");
+    document.getElementById("stage5").classList.remove("hidden");
+}
+
+// ---------- STAGE 5 LOGIC ----------
+function finishMagic() {
+    document.getElementById("stage5").classList.add("hidden");
+    document.getElementById("stage6").classList.remove("hidden");
+}
+
+// ---------- STAGE 6 (FINAL) LOGIC ----------
+function celebrate() {
+    confetti({
+        particleCount: 180,
+        spread: 100,
+        origin: { y: .6 }
+    });
+
+    document.getElementById("endText").style.display = "block";
+
+    // Photo Glow Animation
+    document.getElementById("photo").animate([
+        { transform: "scale(1)", filter: "brightness(1)" },
+        { transform: "scale(1.08)", filter: "brightness(1.15)" },
+        { transform: "scale(1)", filter: "brightness(1)" }
+    ], {
+        duration: 1800,
+        iterations: 2
+    });
+
+    // Final Alert Message
+    setTimeout(() => {
+        alert("Thank You... 🌸🤍");
+    }, 2500);
+}
+</script>
+
+</body>
+</html>
